@@ -1,4 +1,5 @@
-﻿using StarterMobile.WPA81.Common;
+﻿using ReactiveUI;
+using StarterMobile.WPA81.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +27,7 @@ namespace StarterMobile.WPA81
     /// </summary>
     public sealed partial class App : Application
     {
+        readonly AutoSuspendHelper autoSuspendHelper;
         private TransitionCollection transitions;
 
         /// <summary>
@@ -36,6 +38,10 @@ namespace StarterMobile.WPA81
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+            autoSuspendHelper = new AutoSuspendHelper(this);
+
+            RxApp.SuspensionHost.CreateNewAppState = () => new MainPageViewModel();
+            RxApp.SuspensionHost.SetupDefaultSuspendResume();
         }
 
         /// <summary>
@@ -46,6 +52,9 @@ namespace StarterMobile.WPA81
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
+            base.OnLaunched(e);
+            autoSuspendHelper.OnLaunched(e);
+
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
