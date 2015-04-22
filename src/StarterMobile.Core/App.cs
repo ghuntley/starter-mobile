@@ -41,12 +41,12 @@ namespace StarterMobile.Core
         protected override void OnStart()
         {
             this.Log().Info("StarterMobile is starting...");
-            this.Log().Info("******************************");
-            this.Log().Info("**                          **");
-            this.Log().Info("**       StarterMobile      **");
-            this.Log().Info("**                          **");
-            this.Log().Info("******************************");
-            this.Log().Info("Application version: " + AppInfo.Version);
+//            this.Log().Info("******************************");
+//            this.Log().Info("**                          **");
+//            this.Log().Info("**       StarterMobile      **");
+//            this.Log().Info("**                          **");
+//            this.Log().Info("******************************");
+//            this.Log().Info("Application version: " + AppInfo.Version);
 //            this.Log().Info("OS Version: " + Environment.OSVersion.VersionString);
 //            this.Log().Info("Current culture: " + CultureInfo.InstalledUICulture.Name);
             
