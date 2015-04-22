@@ -31,8 +31,11 @@ namespace StarterMobile.Core
         /// </summary>
         protected override void OnSleep()
         {
-            this.Log().Info("StarterMobile has entered into a sleeping state.");
+            this.Log().Info("StarterMobile is about to enter into a sleeping state.");
+            
             base.OnSleep();
+            
+            this.Log().Info("StarterMobile has entered into a sleeping state.");
         }
 
         /// <summary>
