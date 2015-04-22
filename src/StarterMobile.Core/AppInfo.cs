@@ -11,7 +11,6 @@ namespace StarterMobile.Core
         public static readonly IFolder ApplicationRootPath;
         public static readonly IFolder BlobCachePath;
         //        public static readonly string LogFilePath;
-        public static readonly Version Version;
         public const string XamarinInsightsApiKey = "be9792668dec2b6c361d688fa2a44da86f98ced7";
 
         static AppInfo()
@@ -20,8 +19,6 @@ namespace StarterMobile.Core
             BlobCachePath = ApplicationRootPath.CreateFolderAsync("BlobCache", CreationCollisionOption.OpenIfExists).Result;
             
 //            LogFilePath = Path.Combine(ApplicationRootPath, "Log.txt");
-            Version = Assembly.Load().GetName().Version;
         }
     }
 }
-
