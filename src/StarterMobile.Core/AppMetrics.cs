@@ -1,4 +1,5 @@
 ﻿using System;
+using Conditions;
 
 namespace StarterMobile.Core
 {
@@ -38,6 +39,8 @@ namespace StarterMobile.Core
 
         public static string GetKeyForBootstrapperRegistrationTime(string service)
         {
+            Condition.Requires(service).IsNotNullOrWhiteSpace();
+            
             return StandardPrefix() + service.ToLowerInvariant() + ".registration_time";
         }
     }
