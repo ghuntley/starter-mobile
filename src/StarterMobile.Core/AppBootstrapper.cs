@@ -54,7 +54,7 @@ namespace StarterMobile.Core
 
         private  void RegisterViewModels()
         {
-            using (var handle = Insights.TrackTime(AppMetrics.AppBootstrapRegistrationTime("viewmodels")))
+            using (var handle = Insights.TrackTime(AppMetrics.GetKeyForBootstrapperRegistrationTime("viewmodels")))
             {
                 this.Log().Info("Registering ViewModels...");
 
@@ -66,7 +66,7 @@ namespace StarterMobile.Core
 
         private  void RegisterServices()
         {
-            using (var handle = Insights.TrackTime(AppMetrics.AppBootstrapRegistrationTime("services")))
+            using (var handle = Insights.TrackTime(AppMetrics.GetKeyForBootstrapperRegistrationTime("services")))
             {
                 this.Log().Info("Registering Services...");
 
@@ -78,7 +78,7 @@ namespace StarterMobile.Core
 
         private  void RegisterAkavache()
         {
-            using (var handle = Insights.TrackTime(AppMetrics.AppBootstrapRegistrationTime("akavache")))
+            using (var handle = Insights.TrackTime(AppMetrics.GetKeyForBootstrapperRegistrationTime("akavache")))
             {
                 this.Log().Info("Registering Akavache cache storages...");
 

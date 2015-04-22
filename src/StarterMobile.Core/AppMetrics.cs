@@ -36,7 +36,7 @@ namespace StarterMobile.Core
             return String.Format("{0}.", AppInfo.ApplicationName).ToLowerInvariant();
         }
 
-        public static string AppBootstrapRegistrationTime(string service)
+        public static string GetKeyForBootstrapperRegistrationTime(string service)
         {
             return StandardPrefix() + service.ToLowerInvariant() + ".registration_time";
         }
