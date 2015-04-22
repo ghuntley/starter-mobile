@@ -4,10 +4,11 @@ using ReactiveUI;
 
 using Xamarin.Forms;
 using Akavache;
+using Splat;
 
 namespace StarterMobile.Core
 {
-    public class App : Application
+    public class App : Application, IEnableLogger
     {
         public App()
         {
@@ -21,6 +22,7 @@ namespace StarterMobile.Core
         /// </summary>
         protected override void OnResume()
         {
+            this.Log().Info("StarterMobile has resumed from a sleeping state.");
             base.OnResume();
         }
 
@@ -29,6 +31,7 @@ namespace StarterMobile.Core
         /// </summary>
         protected override void OnSleep()
         {
+            this.Log().Info("StarterMobile has entered into a sleeping state.");
             base.OnSleep();
         }
 
@@ -37,6 +40,16 @@ namespace StarterMobile.Core
         /// </summary>
         protected override void OnStart()
         {
+            this.Log().Info("StarterMobile is starting...");
+            this.Log().Info("******************************");
+            this.Log().Info("**                          **");
+            this.Log().Info("**       StarterMobile      **");
+            this.Log().Info("**                          **");
+            this.Log().Info("******************************");
+            this.Log().Info("Application version: " + AppInfo.Version);
+//            this.Log().Info("OS Version: " + Environment.OSVersion.VersionString);
+//            this.Log().Info("Current culture: " + CultureInfo.InstalledUICulture.Name);
+            
             base.OnStart();
         }
     }

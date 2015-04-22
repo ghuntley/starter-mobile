@@ -7,6 +7,7 @@ namespace StarterMobile.Core
 {
     public static class AppInfo
     {
+        public static readonly string ApplicationName;
         public static readonly IFolder ApplicationRootPath;
         public static readonly IFolder BlobCachePath;
         //        public static readonly string LogFilePath;
@@ -14,6 +15,7 @@ namespace StarterMobile.Core
 
         static AppInfo()
         {
+            ApplicationName = "StarterMobile";
             ApplicationRootPath = FileSystem.Current.LocalStorage;
             BlobCachePath = ApplicationRootPath.CreateFolderAsync("BlobCache", CreationCollisionOption.OpenIfExists).Result;
             

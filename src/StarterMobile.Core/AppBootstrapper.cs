@@ -42,27 +42,46 @@ namespace StarterMobile.Core
 //            Router.Navigate.Execute(new HomeViewModel());
         }
 
+        private void OnUnhandledException()
+        {
+//            if (Debugger.IsAttached)
+//                return;
+//
+//            this.Log().FatalException("An unhandled exception occurred, opening the crash report", e.Exception);
+            
+        }
+
         private static void RegisterViewModels()
         {
-//            Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomeViewModel>));
+            this.Log().Info("Registering ViewModels...");
+
+            //            Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomeViewModel>));
+
+            this.Log().Info("ViewModels have been registered.");
         }
 
         private static void RegisterServices()
         {
+            this.Log().Info("Registering Services...");
+
             // Locator.CurrentMutable.RegisterLazySingleton(() =>);
+            
+            this.Log().Info("Services have been registered.");
         }
 
         private static void RegisterAkavache()
         {
-            var application = new SQLitePersistentBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "application.db"));
-            var secrets = new SQLiteEncryptedBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "secrets.db"));
+            this.Log().Info("Registering Akavache cache storages...");
 
-            BlobCache.LocalMachine = application;
-            BlobCache.Secure = secrets;
+            BlobCache.ApplicationName = AppInfo.ApplicationName;
+            BlobCache.LocalMachine = new SQLitePersistentBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "application.db"));
+            BlobCache.Secure = new SQLiteEncryptedBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "secrets.db"));
             BlobCache.InMemory = new InMemoryBlobCache();
             
             Locator.CurrentMutable.RegisterLazySingleton(() => new SQLitePersistentBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "session.db")),
                 typeof(IBlobCache), BlobCacheKeys.SessionCacheContract);
+            
+            this.Log().Info("Akavache cache storages have been registered.");
         }
 
         public RoutingState Router
