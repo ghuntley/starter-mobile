@@ -6,7 +6,7 @@ namespace StarterMobile.Core
     /// <summary>
     /// This class contains the used keys for Akavache
     /// </summary>
-    public static class BlobCacheKeys
+    public static class AppCacheKeys
     {
         /// <summary>
         /// This is the key for the changelog that is shown after the application is updated.

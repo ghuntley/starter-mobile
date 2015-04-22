@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using Akavache;
 using Akavache.Sqlite3;
 using System.IO;
+using Xamarin;
 
 namespace StarterMobile.Core
 {
@@ -20,7 +21,7 @@ namespace StarterMobile.Core
         {
             Router = new RoutingState();
             Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
-            
+
             RegisterAkavache();
             RegisterServices();
             RegisterViewModels();
@@ -53,35 +54,44 @@ namespace StarterMobile.Core
 
         private static void RegisterViewModels()
         {
-            this.Log().Info("Registering ViewModels...");
+            using (var handle = Insights.TrackTime(AppMetrics.AppBootstrapRegistrationTime("viewmodels")))
+            {
+                this.Log().Info("Registering ViewModels...");
 
-            //            Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomeViewModel>));
+                //            Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomeViewModel>));
 
-            this.Log().Info("ViewModels have been registered.");
+                this.Log().Info("ViewModels have been registered.");
+            }
         }
 
         private static void RegisterServices()
         {
-            this.Log().Info("Registering Services...");
+            using (var handle = Insights.TrackTime(AppMetrics.AppBootstrapRegistrationTime("services")))
+            {
+                this.Log().Info("Registering Services...");
 
-            // Locator.CurrentMutable.RegisterLazySingleton(() =>);
+                // Locator.CurrentMutable.RegisterLazySingleton(() =>);
             
-            this.Log().Info("Services have been registered.");
+                this.Log().Info("Services have been registered.");
+            }
         }
 
         private static void RegisterAkavache()
         {
-            this.Log().Info("Registering Akavache cache storages...");
+            using (var handle = Insights.TrackTime(AppMetrics.AppBootstrapRegistrationTime("akavache")))
+            {
+                this.Log().Info("Registering Akavache cache storages...");
 
-            BlobCache.ApplicationName = AppInfo.ApplicationName;
-            BlobCache.LocalMachine = new SQLitePersistentBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "application.db"));
-            BlobCache.Secure = new SQLiteEncryptedBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "secrets.db"));
-            BlobCache.InMemory = new InMemoryBlobCache();
+                BlobCache.ApplicationName = AppInfo.ApplicationName;
+                BlobCache.LocalMachine = new SQLitePersistentBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "application.db"));
+                BlobCache.Secure = new SQLiteEncryptedBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "secrets.db"));
+                BlobCache.InMemory = new InMemoryBlobCache();
             
-            Locator.CurrentMutable.RegisterLazySingleton(() => new SQLitePersistentBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "session.db")),
-                typeof(IBlobCache), BlobCacheKeys.SessionCacheContract);
+                Locator.CurrentMutable.RegisterLazySingleton(() => new SQLitePersistentBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "session.db")),
+                    typeof(IBlobCache), AppCacheKeys.SessionCacheContract);
             
-            this.Log().Info("Akavache cache storages have been registered.");
+                this.Log().Info("Akavache cache storages have been registered.");
+            }
         }
 
         public RoutingState Router
