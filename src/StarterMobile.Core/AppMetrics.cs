@@ -13,12 +13,21 @@ namespace StarterMobile.Core
     ///
     /// <namespace>.<instrumented section>.<target (noun)>.<action (past tense verb)>
     /// 
-    /// akavache.query_time
-    /// akavache.query.<appCacheKey>
-    /// bootstrapper.akavache.registration_time
-    /// bootstrapper.services.registration_time
-    /// bootstrapper.viewmodel.registration_time
-    /// viewmodel.<viewmodelname>.??
+    /// (time)        akavache.query_time
+    /// (counter)     akavache.query.<appCacheKey>
+    /// (time)        bootstrapper.akavache.registration_time
+    /// (time)        bootstrapper.services.registration_time
+    /// (time)        bootstrapper.viewmodel.registration_time
+    /// (counter)     viewmodel.<viewmodelname>.[navigated|activated]
+    /// 
+    /// (counter)     fetchavatar.gravatar.attempted
+    /// (counter)     fetchavatar.gravatar.succeeded
+    /// (counter)     fetchavatar.gravatar.query.<emailaddress>
+    /// (timer)       fetchavatar.gravatar.query_time
+    /// (counter)     fetchavatar.gravatar.failure.account_not_found
+    /// (counter)     fetchavatar.gravatar.failure.authentication_failed
+    /// (counter)     fetchavatar.gravatar.failure.query_failed
+    
     /// </summary>
     public static class AppMetrics
     {
@@ -31,17 +40,6 @@ namespace StarterMobile.Core
         {
             return StandardPrefix() + service.ToLowerInvariant() + ".registration_time";
         }
-        
-        // bootstrapper.*.registration_time;
-        // akavache.registration_time;
-        // akavache.
-        //    (counter)     fetchavatar.gravatar.attempted
-        //    (counter)     fetchavatar.gravatar.succeeded
-        //    (counter)     fetchavatar.gravatar.query.<emailaddress>
-        //    (timer)       fetchavatar.gravatar.query_time
-        //    (counter)     fetchavatar.gravatar.failure.account_not_found
-        //    (counter)     fetchavatar.gravatar.failure.authentication_failed
-        //    (counter)     fetchavatar.gravatar.failure.query_failed
     }
 }
 
