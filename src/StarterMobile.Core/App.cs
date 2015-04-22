@@ -3,6 +3,7 @@
 using ReactiveUI;
 
 using Xamarin.Forms;
+using Akavache;
 
 namespace StarterMobile.Core
 {

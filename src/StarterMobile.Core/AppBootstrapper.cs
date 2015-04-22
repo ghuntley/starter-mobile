@@ -8,6 +8,9 @@ using Splat;
 
 
 using Xamarin.Forms;
+using Akavache;
+using Akavache.Sqlite3;
+using System.IO;
 
 namespace StarterMobile.Core
 {
@@ -17,8 +20,10 @@ namespace StarterMobile.Core
         {
             Router = new RoutingState();
             Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
-
-            Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomeViewModel>));
+            
+            RegisterAkavache();
+            RegisterServices();
+            RegisterViewModels();
 
             UserError.RegisterHandler(ue =>
             {
@@ -34,7 +39,30 @@ namespace StarterMobile.Core
                 return Observable.Return(RecoveryOptionResult.CancelOperation);
             });
 
-            Router.Navigate.Execute(new HomeViewModel());
+//            Router.Navigate.Execute(new HomeViewModel());
+        }
+
+        private static void RegisterViewModels()
+        {
+//            Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomeViewModel>));
+        }
+
+        private static void RegisterServices()
+        {
+            // Locator.CurrentMutable.RegisterLazySingleton(() =>);
+        }
+
+        private static void RegisterAkavache()
+        {
+            var application = new SQLitePersistentBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "application.db"));
+            var secrets = new SQLiteEncryptedBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "secrets.db"));
+
+            BlobCache.LocalMachine = application;
+            BlobCache.Secure = secrets;
+            BlobCache.InMemory = new InMemoryBlobCache();
+            
+            Locator.CurrentMutable.RegisterLazySingleton(() => new SQLitePersistentBlobCache(Path.Combine(AppInfo.BlobCachePath.Path, "session.db")),
+                typeof(IBlobCache), BlobCacheKeys.SessionCacheContract);
         }
 
         public RoutingState Router
